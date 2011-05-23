@@ -1,0 +1,12 @@
+<h1>Twitter</h1>
+
+<%= link_to "MongoDB Users", :action => :index %> | <%= link_to "Twitter Friends", :action => :twitter_friends %><br />
+
+<h2>Twitter Friends (<%= @friends.count %>)</h2>
+<% unless @friends.nil? %>
+  <ol>
+    <% @friends.each do |u| %>
+      <li><%= u.name %></li>
+    <% end %>
+  </ol>
+<% end %>

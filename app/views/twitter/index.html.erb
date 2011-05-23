@@ -1,0 +1,38 @@
+<h1>Twitter</h1>
+
+<%= link_to "MongoDB Users", :action => :index %> | <%= link_to "Twitter Friends", :action => :twitter_friends %><br />
+<br />
+
+<%= link_to "Transfer Users from Twitter to MongoDB", :action => "import_users" %> <br /><br />
+
+<%= link_to "Get Klout Score Serially", :action => "update_klout_serially" %> <br /><br />
+
+<%= link_to "Get Klout Score Background", :action => "update_klout_parallel" %> <br /><br />
+
+<%= link_to "Delete Klout Scores", :action => "delete_klouts" %> <br />
+
+<h2>MongoDB Users (<%= @users.count %>)</h2>
+
+<div id="user_list">
+
+  <table>
+    <thead>
+    <tr>
+      <th>Klout Score</th>
+      <th>User Name</th>
+      <th>Twitter Name</th>
+    </tr>
+    </thead>
+
+    <% @users.each do |u| %>
+      <tr>
+        <td>[<strong><%= u.klout_score.round unless u.klout_score.nil? %></strong>]</td>
+        <td><%= u.first_name + " " + u.last_name %></td>
+        <td>(<%= link_to u.twitter_username || "no twitter name yet", "http://www.twitter.com/#{u.twitter_username}", :target => :new %>)</td>
+      </tr>
+    <% end %>
+
+  </table>
+
+</div>
+

@@ -1,0 +1,30 @@
+
+BODY {
+  font-family      : verdana, arial, helvetica, sans-serif;
+  font-size        : 13px;
+  background-color : #FFFFFF;
+  color            : #000000;
+  margin-top       : 0px;
+}
+
+#header {
+  margin : 20px 0 10px 0;
+}
+
+#footer {
+  margin : 20px 0 10px 0;
+}
+
+#flash {
+  color       : green;
+  font-weight : bold;
+}
+
+li {
+  margin : 0 0 2px 0;
+}
+
+
+#user_list li {
+  list-style-type: none;
+}
