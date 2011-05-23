@@ -22,20 +22,7 @@ class TwitterController < ApplicationController
       u.delete if u.twitter_username.nil?
 
       puts "Getting score for #{u.twitter_username}"
-
-      begin
-        # Get the score!!
-        response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => "srss75s63y9bejb6s9ar3xwr", :users => u.twitter_username}}
-        parsed = JSON.parse(response)
-        score = parsed["users"][0]["kscore"] #if parsed["users"] && parsed["users"][0]
-        u.klout_score = score
-        u.save
-
-        puts "Found Score --> #{score}"
-      rescue
-        # Klout throws a 404 if the user can't be found.. whatever.
-        puts "There was an error for #{u.twitter_username}... skipping."
-      end
+      u.get_klout_score
 
       x += 1
     end
@@ -50,8 +37,8 @@ class TwitterController < ApplicationController
   def update_klout_parallel
     worker = KloutBatchQb.new
     worker.db_settings = MONGOID[Rails.env]
-    worker.queue
-    
+    worker.queue(:priority => 2)
+
     flash[:success] = "Parallel running"
     redirect_to :action => :index
   end
@@ -65,7 +52,7 @@ class TwitterController < ApplicationController
       u.save
     end
     t2 = Time.now
-    
+
     flash[:success] = "Klouts deleted for #{users.count} users in #{t2 - t1} seconds"
     redirect_to :action => :index
   end

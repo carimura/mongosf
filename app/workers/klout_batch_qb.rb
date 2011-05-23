@@ -2,35 +2,41 @@ class KloutBatchQb < SimpleWorker::Base
 
   merge "../models/user"
 
-  merge_worker "klout_batch_worker", "KloutBatchWorker"
+  merge_worker File.join(File.dirname(__FILE__), "klout_batch_worker.rb"), "KloutBatchWorker"
 
   attr_accessor :db_settings
 
   def run
     log "Running Klout Batch Quarterback!"
     init_mongohq
-    
+
     users = User.all
     users_chunk = []
 
     i=0
     users.each do |u|
-      i>=31 ? break : i+=1
-      
-      log "Adding user #{u.twitter_username}"
-      users_chunk << u.twitter_username
+      #i>=32 ? break : i+=1 
 
-      if users_chunk.size % 10 == 0
+      log "Adding user #{u.twitter_username}"
+      users_chunk << u
+
+      if users_chunk.size % 15 == 0
         log "Creating worker with #{users_chunk.inspect}"
 
-        kbw = KloutBatchWorker.new
-        kbw.users = users_chunk
-        kbw.queue
+        queue_kbw(users_chunk)
 
         users_chunk = []
       end
     end
 
+    queue_kbw(users_chunk) unless users_chunk.empty?
+  end
+
+  def queue_kbw(users_chunk)
+    kbw = KloutBatchWorker.new
+    kbw.users = users_chunk
+    kbw.db_settings = db_settings
+    kbw.queue(:priority => 2)
   end
 
 

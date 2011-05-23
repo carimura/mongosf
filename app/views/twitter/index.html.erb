@@ -26,13 +26,37 @@
 
     <% @users.each do |u| %>
       <tr>
-        <td>[<strong><%= u.klout_score.round unless u.klout_score.nil? %></strong>]</td>
+        <td>[<span id="score_<%= u.id %>" style="font-weight: bold;"><%= u.klout_score.round unless u.klout_score.nil? %></span>]
+        </td>
         <td><%= u.first_name + " " + u.last_name %></td>
         <td>(<%= link_to u.twitter_username || "no twitter name yet", "http://www.twitter.com/#{u.twitter_username}", :target => :new %>)</td>
       </tr>
     <% end %>
 
   </table>
-
 </div>
+
+
+
+<script type="text/javascript">
+
+
+  //$.timer(10000, function (timer) {
+  <% @users.each do |u| %>
+  //display_klout("<%= u.id %>");
+  <% end %>
+  //});
+
+
+  function display_klout(user_id) {
+    $.ajax({
+      type: "GET",
+      url: "/users/klout_score/" + user_id,
+      success: function(data) {
+        $('#score_' + user_id).html(data);
+      }
+    });
+  }
+
+</script>
 

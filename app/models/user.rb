@@ -26,5 +26,20 @@ class User
 
     users.count
   end
-  
+
+  def get_klout_score
+    begin
+      # Get the score!!
+      response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => "srss75s63y9bejb6s9ar3xwr", :users => self.twitter_username}}
+      parsed = JSON.parse(response)
+      score = parsed["users"][0]["kscore"] #if parsed["users"] && parsed["users"][0]
+      self.klout_score = score
+      self.save
+      puts "Found Score --> #{score}"
+    rescue
+      # Klout throws a 404 if the user can't be found.. whatever.
+      puts "There was an error for #{self.twitter_username}... skipping."
+    end
+  end
+
 end

@@ -5,6 +5,9 @@ Mongo1::Application.routes.draw do
 
   root :to => "welcome#index"
 
+
+  match 'users/klout_score/:id' => 'users#klout_score'
+
   match ':controller(/:action(/:id(.:format)))'
 
 

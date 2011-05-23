@@ -22,6 +22,11 @@ class UsersController < ApplicationController
   end
 
 
+  def klout_score
+    u = User.find(params[:id])
+    puts "returning klout score #{u.klout_score} for user #{u.twitter_username}"
+    render :text => u.klout_score
+  end
 
   
 end
