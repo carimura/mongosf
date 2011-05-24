@@ -17,7 +17,7 @@ class TwitterController < ApplicationController
     users = User.all
     x=0
     users.each do |u|
-      break if x > 10
+      #break if x > 10
 
       puts "Getting score for #{u.twitter_username}"
       u.get_klout_score
