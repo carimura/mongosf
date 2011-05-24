@@ -1,32 +1,31 @@
-<%= link_to "MongoDB Users", :action => :index %> | <%= link_to "Twitter Friends", :action => :twitter_friends %><br />
+<%= link_to "Get Klout Score Serially", :action => "update_klout_serially" %> |
+<%= link_to "Get Klout Score SimpleWorker", :action => "update_klout_parallel" %> |
+<%= link_to "Delete Klout Scores", :action => "delete_klouts" %>
 
-<br /><hr /><br />
+<br /><br />
 
-<%= link_to "Get Klout Score Serially", :action => "update_klout_serially" %> <br /><br />
-
-<%= link_to "Get Klout Score SimpleWorker", :action => "update_klout_parallel" %> <br /><br />
-
-<%= link_to "Delete Klout Scores", :action => "delete_klouts" %> <br />
 
 <h2>MongoDB Users (<%= @users.count %>)</h2>
 
 <div id="user_list">
 
-  <table>
+  <table cellpadding="0" id="klout-table">
     <thead>
     <tr>
-      <th>Klout Score - Serial</th>
       <th>User Name</th>
       <th>Twitter Name</th>
+      <th>Klout Score (Serial)</th>
+      <th>Klout Score (SW)</th>
     </tr>
     </thead>
 
     <% @users.each do |u| %>
       <tr>
-        <td>[<span id="score_<%= u.id %>" style="font-weight: bold;"><%= u.klout_score.round unless u.klout_score.nil? %></span>]
-        </td>
         <td><%= u.first_name + " " + u.last_name %></td>
-        <td>(<%= link_to u.twitter_username || "no twitter name yet", "http://www.twitter.com/#{u.twitter_username}", :target => :new %>)</td>
+        <td><%= link_to u.twitter_username || "no twitter name yet", "http://www.klout.com/#{u.twitter_username}", :target => :new %></td>
+        <td>[<span id="score_<%= u.id %>" style="font-weight: bold;"><%= u.klout_score.round unless u.klout_score.nil? %></span>]</td>
+        <td>[<span id="score_sw_<%= u.id %>" style="font-weight: bold;"><%= u.klout_score_sw.round unless u.klout_score_sw.nil? %></span>]
+        </td>
       </tr>
     <% end %>
 
@@ -39,9 +38,9 @@
 
 
   //$.timer(10000, function (timer) {
-  <% @users.each do |u| %>
-  //display_klout("<%= u.id %>");
-  <% end %>
+  <%# @users.each do |u| %>
+  //display_klout("<%# u.id %>");
+  <%# end %>
   //});
 
 

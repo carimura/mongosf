@@ -28,3 +28,9 @@ li {
 #user_list li {
   list-style-type: none;
 }
+
+#klout-table th {
+  padding: 0 15px 0 0;
+  text-align: left;
+}
+

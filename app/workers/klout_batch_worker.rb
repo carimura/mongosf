@@ -25,7 +25,7 @@ class KloutBatchWorker < SimpleWorker::Base
       score = parsed["users"][0]["kscore"] #if parsed["users"] && parsed["users"][0]
 
       u = User.first(conditions: {twitter_username: username})
-      u.klout_score = score
+      u.klout_score_sw = score
       u.save
       log "Found Score --> #{score}"
     rescue => ex

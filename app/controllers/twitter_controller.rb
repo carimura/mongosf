@@ -13,20 +13,18 @@ class TwitterController < ApplicationController
     t1 = Time.now
 
     users = User.all
-
     x=0
     users.each do |u|
       #break if x > 10
 
       # No twitter name, no need for this user
-      u.delete if u.twitter_username.nil?
+      #u.delete if u.twitter_username.nil?
 
       puts "Getting score for #{u.twitter_username}"
       u.get_klout_score
 
       x += 1
     end
-
     t2 = Time.now
 
     flash[:success] = "Klouts generated for #{x} users in #{t2 - t1} seconds"
@@ -35,11 +33,14 @@ class TwitterController < ApplicationController
   end
 
   def update_klout_parallel
+    t1 = Time.now
     worker = KloutBatchQb.new
     worker.db_settings = MONGOID[Rails.env]
     worker.queue(:priority => 2)
+    t2 = Time.now
 
-    flash[:success] = "Parallel running"
+    flash[:success] = "Workers Scheduled in #{t2 - t1} seconds"
+    
     redirect_to :action => :index
   end
 
@@ -47,11 +48,12 @@ class TwitterController < ApplicationController
   def delete_klouts
     t1 = Time.now
     users = User.all
-
+    x=0
     users.each do |u|
-      #x+=1
-      #x<=100 ? next : u.delete
+      x+=1
+      #x<=200 ? next : u.delete
       u.klout_score = nil
+      u.klout_score_sw = nil
       u.save
     end
     t2 = Time.now
