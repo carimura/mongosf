@@ -1,0 +1,31 @@
+defaults: &defaults
+  host: flame.mongohq.com
+  port: 27102
+  username: webuser
+  password: mongosf1
+  database: learn
+  
+#defaults: &defaults
+#  host: localhost
+#  port: 27017
+#  username: webuser
+#  password: 3lmers
+#  database: learn
+
+development:
+  <<: *defaults
+
+production:
+  <<: *defaults
+
+#test:
+#  <<: *defaults
+#  database: mongo1_test
+
+# set these environment variables on your prod server
+#production:
+#  host: <%= ENV['MONGOID_HOST'] %>
+#  port: <%= ENV['MONGOID_PORT'] %>
+#  username: <%= ENV['MONGOID_USERNAME'] %>
+#  password: <%= ENV['MONGOID_PASSWORD'] %>
+#  database: <%= ENV['MONGOID_DATABASE'] %>
