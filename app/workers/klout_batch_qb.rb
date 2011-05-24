@@ -15,7 +15,7 @@ class KloutBatchQb < SimpleWorker::Base
 
     i=0
     users.each do |u|
-      #i>=32 ? break : i+=1 
+      #i>=31 ? break : i+=1
 
       log "Adding user #{u.twitter_username}"
       users_chunk << u

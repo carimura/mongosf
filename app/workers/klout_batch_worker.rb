@@ -8,7 +8,7 @@ class KloutBatchWorker < SimpleWorker::Base
     log "Running Klout Batch Worker"
     init_mongohq
 
-    log "Found users --> #{users.inspect} "
+    #log "Found users --> #{users.inspect} "
 
     users.each do |u|
       log "Getting score for #{u["twitter_username"]}"
