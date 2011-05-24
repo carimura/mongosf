@@ -6,6 +6,8 @@ class User
   field :last_name
   field :email
   field :klout_score
+  field :klout_score_sw
+  
   field :twitter_username
 
 

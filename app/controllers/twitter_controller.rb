@@ -47,7 +47,10 @@ class TwitterController < ApplicationController
   def delete_klouts
     t1 = Time.now
     users = User.all
+
     users.each do |u|
+      #x+=1
+      #x<=100 ? next : u.delete
       u.klout_score = nil
       u.save
     end
