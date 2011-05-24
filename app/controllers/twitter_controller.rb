@@ -2,6 +2,8 @@ class TwitterController < ApplicationController
 
   def index
     @users = User.all(sort: [[:klout_score, :desc]])
+    @klout_count = User.count(conditions: { :klout_score.ne => nil })
+    @klout_sw_count = User.count(conditions: { :klout_score_sw.ne => nil })
   end
 
   def twitter_friends
@@ -16,11 +18,6 @@ class TwitterController < ApplicationController
     x=0
     users.each do |u|
       #break if x > 10
-
-      # No twitter name, no need for this user
-      #u.delete if u.twitter_username.nil?
-
-      next unless u.klout_score.nil?
 
       puts "Getting score for #{u.twitter_username}"
       u.get_klout_score
