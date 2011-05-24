@@ -20,7 +20,7 @@ class KloutBatchQb < SimpleWorker::Base
       log "Adding user #{u.twitter_username}"
       users_chunk << u
 
-      if users_chunk.size % 50 == 0
+      if users_chunk.size % 40 == 0
         log "Creating worker with #{users_chunk.inspect}"
 
         queue_kbw(users_chunk)
