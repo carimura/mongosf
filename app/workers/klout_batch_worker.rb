@@ -19,7 +19,7 @@ class KloutBatchWorker < SimpleWorker::Base
 
   def get_klout_score(username, retries=0)
     begin
-      response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => "srss75s63y9bejb6s9ar3xwr", :users => username}}
+      response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => "zegbm6n2438q6xuna4knnwnz", :users => username}}
       parsed = JSON.parse(response)
 
       score = parsed["users"][0]["kscore"] #if parsed["users"] && parsed["users"][0]

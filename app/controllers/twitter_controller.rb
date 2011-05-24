@@ -20,6 +20,8 @@ class TwitterController < ApplicationController
       # No twitter name, no need for this user
       #u.delete if u.twitter_username.nil?
 
+      next unless u.klout_score.nil?
+
       puts "Getting score for #{u.twitter_username}"
       u.get_klout_score
 
@@ -51,7 +53,7 @@ class TwitterController < ApplicationController
     x=0
     users.each do |u|
       x+=1
-      #x<=200 ? next : u.delete
+      #x<=1000 ? next : u.delete
       u.klout_score = nil
       u.klout_score_sw = nil
       u.save
