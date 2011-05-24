@@ -8,8 +8,6 @@ class KloutBatchWorker < SimpleWorker::Base
     log "Running Klout Batch Worker"
     init_mongohq
 
-    #log "Found users --> #{users.inspect} "
-
     users.each do |u|
       log "Getting score for #{u["twitter_username"]}"
       get_klout_score(u["twitter_username"])
@@ -18,12 +16,12 @@ class KloutBatchWorker < SimpleWorker::Base
 
 
   def get_klout_score(username, retries=0)
-    api_keys = ["zegbm6n2438q6xuna4knnwnz", "jxhxgvpxnqyyen534xv49fqp", "kyjeda7yc4umc6c9xez4a8h7", "wyxy6q2k23k9vth3z7akpm4t"]
+    api_keys = ["zegbm6n2438q6xuna4knnwnz", "jxhxgvpxnqyyen534xv49fqp", "kyjeda7yc4umc6c9xez4a8h7", "wyxy6q2k23k9vth3z7akpm4t", "2bnvwkfh3yx2mxrntspy3cwn", "fmwmg6hjagnfdh3aywk553m5"]
     begin
-      response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => api_keys[rand(4)], :users => username}}
+      response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => api_keys[rand(6)], :users => username}}
       parsed = JSON.parse(response)
 
-      score = parsed["users"][0]["kscore"] #if parsed["users"] && parsed["users"][0]
+      score = parsed["users"][0]["kscore"]
 
       u = User.first(conditions: {twitter_username: username})
       u.klout_score_sw = score

@@ -30,13 +30,10 @@ class User
   end
 
   def get_klout_score(retries=0)
-    api_keys = ["zegbm6n2438q6xuna4knnwnz", "jxhxgvpxnqyyen534xv49fqp", "kyjeda7yc4umc6c9xez4a8h7", "wyxy6q2k23k9vth3z7akpm4t", "e42vqae3r3au4wjbd48x5ezj"]
     begin
-      key = api_keys[4]
-      
-      response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => key, :users => self.twitter_username}}
+      response = RestClient.get 'http://api.klout.com/1/klout.json', {:params => {:key => "j5cru6znhpt4x3bzx7svcjsu", :users => self.twitter_username}}
       parsed = JSON.parse(response)
-      score = parsed["users"][0]["kscore"] #if parsed["users"] && parsed["users"][0]
+      score = parsed["users"][0]["kscore"]
       self.klout_score = score
       self.save
       puts "Found Score --> #{score}"
