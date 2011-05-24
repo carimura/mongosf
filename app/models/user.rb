@@ -29,7 +29,7 @@ class User
     users.count
   end
 
-  def get_klout_score
+  def get_klout_score(retries=0)
     api_keys = ["zegbm6n2438q6xuna4knnwnz", "jxhxgvpxnqyyen534xv49fqp", "kyjeda7yc4umc6c9xez4a8h7", "wyxy6q2k23k9vth3z7akpm4t", "e42vqae3r3au4wjbd48x5ezj"]
     begin
       key = api_keys[4]
@@ -42,6 +42,10 @@ class User
       puts "Found Score --> #{score}"
     rescue => ex
       puts "Exception for #{self.twitter_username}:  #{ex.inspect}"
+      sleep 1
+      return if retries > 5
+      retries += 1
+      self.get_klout_score(retries)
     end
   end
 

@@ -32,7 +32,7 @@ class KloutBatchWorker < SimpleWorker::Base
     rescue => ex
       log "Exception for #{username}:  #{ex.inspect}"
       sleep 1
-      return if retries > 5 || ex.to_s.include?("404")
+      return if retries > 5
       retries += 1
       get_klout_score(username, retries)
     end
