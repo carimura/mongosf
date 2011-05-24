@@ -65,12 +65,14 @@ class TwitterController < ApplicationController
 
   def import_users
     @friends = @twitter.get_all_friends
+    @followers = @twitter.get_all_followers
 
     t1 = Time.now
     @count = User.transfer_to_mongo(@friends)
+    @count2 = User.transfer_to_mongo(@followers)
     t2 = Time.now
 
-    flash[:success] = "#{@count} users copied to MongoDB in #{t2 - t1} seconds"
+    flash[:success] = "#{@count + @count2} users copied to MongoDB in #{t2 - t1} seconds"
     redirect_to :action => :index
   end
 

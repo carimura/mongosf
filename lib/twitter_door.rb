@@ -13,8 +13,19 @@ class TwitterDoor
       friends = @client.friends(:cursor => friends.next_cursor)
       friends.users.each { |u| all_friends << u }
     end
-
     all_friends
+  end
+
+  def get_all_followers
+    followers = @client.followers({:cursor => -1})
+    all_followers = []
+    followers.users.each { |u| all_followers << u }
+
+    while followers.next_cursor != 0
+      followers = @client.followers(:cursor => followers.next_cursor)
+      followers.users.each { |u| all_followers << u }
+    end
+    all_followers
   end
 
   def get_rate_limit
