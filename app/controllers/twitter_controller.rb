@@ -1,7 +1,7 @@
 class TwitterController < ApplicationController
 
   def index
-    @users = User.all(sort: [[:klout_score, :desc]])
+    @users = User.all(sort: [[:klout_score_sw, :desc]])
     @klout_count = User.count(conditions: { :klout_score.ne => nil })
     @klout_sw_count = User.count(conditions: { :klout_score_sw.ne => nil })
   end

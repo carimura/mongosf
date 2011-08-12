@@ -17,8 +17,8 @@ Parallel: <span style="color: red; font-size: 16px; font-weight: bold;"><%= @klo
     <tr>
       <th>User Name</th>
       <th>Twitter Name</th>
-      <th>Klout Score (Serial)</th>
       <th>Klout Score (SW)</th>
+      <th>Klout Score (Serial)</th>
     </tr>
     </thead>
 
@@ -26,8 +26,8 @@ Parallel: <span style="color: red; font-size: 16px; font-weight: bold;"><%= @klo
       <tr>
         <td><%= u.first_name + " " + u.last_name %></td>
         <td><%= link_to u.twitter_username || "no twitter name yet", "http://www.klout.com/#{u.twitter_username}", :target => :new %></td>
-        <td>[<span id="score_<%= u.id %>" style="font-weight: bold;"><%= u.klout_score.round unless u.klout_score.nil? %></span>]</td>
         <td>[<span id="score_sw_<%= u.id %>" style="font-weight: bold;"><%= u.klout_score_sw.round unless u.klout_score_sw.nil? %></span>]
+        <td>[<span id="score_<%= u.id %>" style="font-weight: bold;"><%= u.klout_score.round unless u.klout_score.nil? %></span>]</td>
         </td>
       </tr>
     <% end %>
