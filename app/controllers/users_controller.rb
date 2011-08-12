@@ -1,8 +1,21 @@
 class UsersController < ApplicationController
 
-
   def index
     @users = User.all
+  end
+
+  def trim_users
+    i=0
+    y=0
+    User.all.each do |u|
+      if i > 100
+        u.destroy
+        y+=1
+      end
+      i+=1
+    end
+
+    render :text => "Deleted #{y} users"
   end
 
 
@@ -28,5 +41,5 @@ class UsersController < ApplicationController
     render :text => u.klout_score
   end
 
-  
+
 end

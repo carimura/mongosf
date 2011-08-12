@@ -23,7 +23,11 @@ class KloutBatchQb < SimpleWorker::Base
       if users_chunk.size % 40 == 0
         log "Creating worker with #{users_chunk.inspect}"
 
-        queue_kbw(users_chunk)
+        begin
+          queue_kbw(users_chunk)
+        rescue => ex
+          log "There was a problem --> #{ex}"
+        end
 
         users_chunk = []
       end

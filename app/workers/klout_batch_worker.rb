@@ -4,6 +4,7 @@ class KloutBatchWorker < SimpleWorker::Base
 
   attr_accessor :users, :db_settings
 
+
   def run
     log "Running Klout Batch Worker"
     init_mongohq

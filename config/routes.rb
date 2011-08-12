@@ -1,12 +1,11 @@
 Mongo1::Application.routes.draw do
 
+  match 'users/klout_score/:id' => 'users#klout_score'
+  match 'users/trim_users' => 'users#trim_users'
 
   resources :users
 
   root :to => "welcome#index"
-
-
-  match 'users/klout_score/:id' => 'users#klout_score'
 
   match ':controller(/:action(/:id(.:format)))'
 

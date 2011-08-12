@@ -1,9 +1,9 @@
 defaults: &defaults
-  host: flame.mongohq.com
-  port: 27102
+  host: dbh29.mongolab.com
+  port: 27297
   username: webuser
-  password: mongosf1
-  database: learn
+  password: 123
+  database: mongosf
   
 #defaults: &defaults
 #  host: localhost
